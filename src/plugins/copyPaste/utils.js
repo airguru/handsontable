@@ -67,18 +67,15 @@ export function tableToArray(element) {
 
   if (checkElement && isHTMLTable(checkElement)) {
     const rows = checkElement.rows;
-    const rowsLen = rows && rows.length;
     const tempArray = [];
 
-    for (let row = 0; row < rowsLen; row += 1) {
-      const cells = rows[row].cells;
-      const cellsLen = cells.length;
+    for (let row of rows) {
+      const cells = row.cells;
       const newRow = [];
 
-      for (let column = 0; column < cellsLen; column += 1) {
-        const cell = cells[column];
+      for (let cell of cells) {
         cell.innerHTML = cell.innerHTML.trim().replace(/<br(.|)>(\n?)/, '\n');
-        const cellText = cell.innerText;
+        const cellText = cell.textContent;
 
         newRow.push(cellText);
       }
