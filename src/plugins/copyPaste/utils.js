@@ -66,21 +66,25 @@ export function tableToArray(element) {
   }
 
   if (checkElement && isHTMLTable(checkElement)) {
-    const rows = checkElement.rows;
     const tempArray = [];
 
-    for (let row of rows) {
-      const cells = row.cells;
+    if (checkElement.rows.length == 0) { return tempArray; }
+    let row = checkElement.rows[0];
+    
+    while (row != null) {
       const newRow = [];
-
-      for (let cell of cells) {
-        cell.innerHTML = cell.innerHTML.trim().replace(/<br(.|)>(\n?)/, '\n');
-        const cellText = cell.textContent;
-
-        newRow.push(cellText);
+      if (row.cells.length != 0)
+      {
+        let cell = row.cells[0];
+        while (cell != null)
+        {
+          newRow.push(cell.textContent);
+          cell = cell.nextElementSibling;
+        }
       }
 
       tempArray.push(newRow);
+      row = row.nextElementSibling;
     }
 
     result.push(...tempArray);

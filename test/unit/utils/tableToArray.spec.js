@@ -76,4 +76,24 @@ describe('TableToArray', () => {
       expect(result).toEqual([["1","3"],["2","4"]]);
 
     });
+
+    it('Handles large data', ()=>{
+        let largeInput = "<table>";
+        const largeOutput = []
+
+        const length = 4000;
+        for (let i = 0; i < length; i++) {
+            largeInput += String.raw`"<tr height=20 style='height:15.0pt'>
+            <td height=20 align=right style='height:15.0pt'>154</td>
+           </tr>`;
+           largeOutput.push(["154"]);
+        }
+        largeInput += "</table>";
+
+        console.time("Large data time");
+        const result = tableToArray(largeInput);
+        console.timeEnd("Large data time");
+        expect(result).toEqual(largeOutput);
+         
+    });
 });
